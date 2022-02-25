@@ -28,9 +28,12 @@ jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     %le pion doit maintenant etre place
     write(JoueurCourant),writeln(" a quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),
-    read(Position),placeDisponible(Position,PlacesOccupees,PositionFinale),
+    %read(Position),placeDisponible(Position,PlacesOccupees,PositionFinale),
+    %number(PositionFinale),
+    read(PositionFinale),
+    fonction(Plateau,PositionFinale,PionFinal,Res),
 
-    placerPion(PositionFinale,PionFinal,Plateau,_,Res),
+    %placerPion(PositionFinale,PionFinal,Plateau,_,Res),
     retirer(PiecesDisponibles,PionFinal,_,PD1),
     ajouterElem(PositionFinale,PlacesOccupees,PO1),
     inverser(JoueurCourant,JoueurPassif,JC1,JP1),
