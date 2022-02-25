@@ -1,19 +1,25 @@
 :-include("predicatsQuarto.pl").
 :-include("fonctionsQuarto.pl").
+:-include("jeuIA.pl").
 
 
 quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consignes(),
     writeln("entrez le nom du joueur 1 :"),read(Joueur1),atom_string(Joueur1,J1),
     writeln("entrez le nom du joueur 2 :"),read(Joueur2),atom_string(Joueur2,J2),
 
-    writeln(J1),writeln(J2),
-    jeu(Plateau,PiecesDisponibles,PlacesOccupees,J1,J2).
+    writeln(J1),writeln(J2),nl,nl,nl,
+    writeln("Quel mode de jeu que vous voulez faire ?"),nl,
+    writeln("entrez 1 pour jouer à 2 sur le même ordinateur"),
+    writeln("entrez 2 pour jouer contre une IA non jouant hasardeusement"),
+    read(Mode2Jeu),lectureModeJeu(Mode2Jeu),
+
+    jeu(Plateau,PiecesDisponibles,PlacesOccupees,J1,J2,Mode2Jeu).
 
 
 inverser(A,B,B,A).
 
 jeu(Plateau,[],_):-not(gagne(Plateau)),writeln("egalite, vous avez placé tous les pions"),etatPlateau(Plateau),!.
-jeu(Plateau,_,_,_,JoueurPassif):-gagne(Plateau),write("Bravo "),write(JoueurPassif),writeln("! Vous avez gagné la partie"),etatPlateau(Plateau),!.
+jeu(Plateau,_,_,_,JoueurPassif,Mode2Jeu):-gagne(Plateau),write("Bravo "),write(JoueurPassif),writeln("! Vous avez gagné la partie"),etatPlateau(Plateau),!.
 
 jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     %on affiche l'etat du plateau :
@@ -31,7 +37,7 @@ jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     %read(Position),placeDisponible(Position,PlacesOccupees,PositionFinale),
     %number(PositionFinale),
     read(PositionFinale),
-    fonction(Plateau,PositionFinale,PionFinal,Res),
+    poserPion(Plateau,PositionFinale,PionFinal,Res),
 
     %placerPion(PositionFinale,PionFinal,Plateau,_,Res),
     retirer(PiecesDisponibles,PionFinal,_,PD1),
