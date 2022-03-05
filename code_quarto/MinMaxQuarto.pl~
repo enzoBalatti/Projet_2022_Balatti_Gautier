@@ -1,6 +1,7 @@
 :-include("predicatsquarto.pl").
 
-connexion(PionAPlacer,Case,Plateau,ValeurRetour):-
+connexion(_,_,[],0).%la liste vide correspond aux cases adjacentes.
+connexion(PionAPlacer,Case,[T|Q],ValeurRetour):-
 % evalue la force de connexion avec les pions sur les cases les plus
 % proches, retourne la case pour laquelle il y le plus de connexions
 % possibles. Pour que ça marche, si un pion a une connexion avec un
@@ -8,32 +9,32 @@ connexion(PionAPlacer,Case,Plateau,ValeurRetour):-
 % presents sur la ligne/colonne/diago, il faudra une autre fonction
 % pour la ligne. une case avec connexion =100.
 
-   casesAdjacentes(Case,Ca),nth1(Ca,E).
+  .
 
 listeElements([claire,fonce,ronde,carre,haute,basse,creuse,pleine]).
-nbElementsCommuns(_,_,[],0).
-nbElementsCommuns(Pion1,Pion2,[T|Q],N):-L=[Pion1,Pion2],maplist(T,L),N is 1+N1,nbElementsCommuns(Pion1,Pion2,Q,N1).
+nbElementsCommuns(_,_,[],0).%calcule le nombre d'elements communs entre 2 pions
+nbElementsCommuns(Pion1,Pion2,[T|Q],N):-L=[Pion1,Pion2],maplist(T,L),nbElementsCommuns(Pion1,Pion2,Q,N1),N is 1+N1,!.
 nbElementsCommuns(Pion1,Pion2,[_|Q],N):-nbElementsCommuns(Pion1,Pion2,Q,N).
 
 scoreCase(_,[],_).
-scoreCase(Case,[T|Q],Score):-
+scoreCase(Case,[T|Q],Score).
 
-casesAdjacentes(1,CasesAdjacentes):-CasesAdjacentes=[2,5,6].
-casesAdjacentes(2,CasesAdjacentes):-CasesAdjacentes=[1,3,6].
-casesAdjacentes(3,CasesAdjacentes):-CasesAdjacentes=[2,7,4].
-casesAdjacentes(4,CasesAdjacentes):-CasesAdjacentes=[3,7,8].
-casesAdjacentes(5,CasesAdjacentes):-CasesAdjacentes=[1,6,9].
-casesAdjacentes(6,CasesAdjacentes):-CasesAdjacentes=[1,2,5,7,10,11].
-casesAdjacentes(7,CasesAdjacentes):-CasesAdjacentes=[3,4,6,8,10,11].
-casesAdjacentes(8,CasesAdjacentes):-CasesAdjacentes=[4,7,12].
-casesAdjacentes(9,CasesAdjacentes):-CasesAdjacentes=[5,10,11].
-casesAdjacentes(10,CasesAdjacentes):-CasesAdjacentes=[6,7,9,11,13,14].
-casesAdjacentes(11,CasesAdjacentes):-CasesAdjacentes=[6,7,10,12,15,16].
-casesAdjacentes(12,CasesAdjacentes):-CasesAdjacentes=[8,11,16].
-casesAdjacentes(13,CasesAdjacentes):-CasesAdjacentes=[9,10,14].
-casesAdjacentes(14,CasesAdjacentes):-CasesAdjacentes=[10,13,15].
-casesAdjacentes(15,CasesAdjacentes):-CasesAdjacentes=[14,11,16].
-casesAdjacentes(16,CasesAdjacentes):-CasesAdjacentes=[15,11,12].
+casesAdjacentes(0,CasesAdjacentes):-CasesAdjacentes=[2,5,6].
+casesAdjacentes(1,CasesAdjacentes):-CasesAdjacentes=[1,3,6].
+casesAdjacentes(2,CasesAdjacentes):-CasesAdjacentes=[2,7,4].
+casesAdjacentes(3,CasesAdjacentes):-CasesAdjacentes=[3,7,8].
+casesAdjacentes(4,CasesAdjacentes):-CasesAdjacentes=[1,6,9].
+casesAdjacentes(5,CasesAdjacentes):-CasesAdjacentes=[1,2,5,7,10,11].
+casesAdjacentes(6,CasesAdjacentes):-CasesAdjacentes=[3,4,6,8,10,11].
+casesAdjacentes(7,CasesAdjacentes):-CasesAdjacentes=[4,7,12].
+casesAdjacentes(8,CasesAdjacentes):-CasesAdjacentes=[5,10,11].
+casesAdjacentes(9,CasesAdjacentes):-CasesAdjacentes=[6,7,9,11,13,14].
+casesAdjacentes(10,CasesAdjacentes):-CasesAdjacentes=[6,7,10,12,15,16].
+casesAdjacentes(11,CasesAdjacentes):-CasesAdjacentes=[8,11,16].
+casesAdjacentes(12,CasesAdjacentes):-CasesAdjacentes=[9,10,14].
+casesAdjacentes(13,CasesAdjacentes):-CasesAdjacentes=[10,13,15].
+casesAdjacentes(14,CasesAdjacentes):-CasesAdjacentes=[14,11,16].
+casesAdjacentes(15,CasesAdjacentes):-CasesAdjacentes=[15,11,12].
 
 
 
