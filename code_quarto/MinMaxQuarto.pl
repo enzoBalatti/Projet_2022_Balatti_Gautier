@@ -1,15 +1,33 @@
 :-include("predicatsquarto.pl").
+:-use_module(library(random)).
 
-connexion(_,_,[],0).%la liste vide correspond aux cases adjacentes.
-connexion(PionAPlacer,Case,[T|Q],ValeurRetour):-
+
+coisirMeilleurePosition([],_,MeilleurScore).
+choisirMeilleurePosition([T|Q],ScoreCourant,MeilleurScore,MeilleurePosition).
+
+
+scoresPlateau(_,_,[],Scores,Scores1,_):-reverse(Scores,Scores1),!.
+scoresPlateau(Plateau,Pion,[_|Q],Scores,Scores1,Compteur):-listeElements(Elements),
+   casesAdjacentes(Compteur,CA),
+   connexion(Pion,Plateau,CA,Elements,Valeur),
+   Compteur1 is Compteur+1,
+   scoresPlateau(Plateau,Pion,Q,[Valeur|Scores],Scores1,Compteur1).
+
+
+
+connexion(_,_,[],_,0).%la liste vide correspond aux cases adjacentes.
+connexion(Pion,Plateau,[T|Q],Elements,ValeurRetour):-
 % evalue la force de connexion avec les pions sur les cases les plus
 % proches, retourne la case pour laquelle il y le plus de connexions
 % possibles. Pour que ça marche, si un pion a une connexion avec un
 % autre il faut que la connexion existe aussi avec tout les autres pions
 % presents sur la ligne/colonne/diago, il faudra une autre fonction
 % pour la ligne. une case avec connexion =100.
+%
+  nth0(T,Plateau,PionVoisin),
+  nbElementsCommuns(Pion,PionVoisin,Elements,N),
+  connexion(Pion,Plateau,Q,Elements,ValeurRetour1),ValeurRetour is ValeurRetour1+N,!.
 
-  .
 
 listeElements([claire,fonce,ronde,carre,haute,basse,creuse,pleine]).
 nbElementsCommuns(_,_,[],0).%calcule le nombre d'elements communs entre 2 pions
