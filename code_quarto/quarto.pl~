@@ -17,7 +17,6 @@ quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consig
     jeu(Plateau,PiecesDisponibles,PlacesOccupees,J1,J2).
 
 
-inverser(A,B,B,A).
 
 jeu(Plateau,[],_,_,_):-not(gagne(Plateau)),writeln("egalite, vous avez placé tous les pions"),etatPlateau(Plateau),!.
 jeu(Plateau,_,_,_,JoueurPassif):-gagne(Plateau),write("Bravo "),write(JoueurPassif),writeln("! Vous avez gagné la partie"),etatPlateau(Plateau),!.

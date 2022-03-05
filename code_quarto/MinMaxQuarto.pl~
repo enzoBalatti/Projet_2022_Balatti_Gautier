@@ -1,3 +1,5 @@
+:-include("predicatsquarto.pl").
+
 connexion(PionAPlacer,Case,Plateau,ValeurRetour):-
 % evalue la force de connexion avec les pions sur les cases les plus
 % proches, retourne la case pour laquelle il y le plus de connexions
@@ -6,7 +8,15 @@ connexion(PionAPlacer,Case,Plateau,ValeurRetour):-
 % presents sur la ligne/colonne/diago, il faudra une autre fonction
 % pour la ligne. une case avec connexion =100.
 
-   casesAdjacentes(Case,Ca) .
+   casesAdjacentes(Case,Ca),nth1(Ca,E).
+
+listeElements([claire,fonce,ronde,carre,haute,basse,creuse,pleine]).
+nbElementsCommuns(_,_,[],0).
+nbElementsCommuns(Pion1,Pion2,[T|Q],N):-L=[Pion1,Pion2],maplist(T,L),N is 1+N1,nbElementsCommuns(Pion1,Pion2,Q,N1).
+nbElementsCommuns(Pion1,Pion2,[_|Q],N):-nbElementsCommuns(Pion1,Pion2,Q,N).
+
+scoreCase(_,[],_).
+scoreCase(Case,[T|Q],Score):-
 
 casesAdjacentes(1,CasesAdjacentes):-CasesAdjacentes=[2,5,6].
 casesAdjacentes(2,CasesAdjacentes):-CasesAdjacentes=[1,3,6].
@@ -44,9 +54,6 @@ trouverColonne(N,1):-number(N),(N=:=4;N=:=8;N=:=12;N=:=16),!.
 
 trouverDiago(N):-number(N),(N=:=1;N=:=6;N=:=11;N=:=16).
 trouverDiagoInv(N):-number(N),(N=:=13;N=:=10;N=:=7;N=:=4).
-
-
-
 
 
 

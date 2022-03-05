@@ -128,6 +128,9 @@ placeDisponible(_,[]).
 placeDisponible(Position,[T|Q]):-
     Position\=T,placeDisponible(Position,Q).
 
+inverser(A,B,B,A).
+
+
 poserPion(["-",B,C,D,E,F,G,H,I,J,K,L,M,N,O,P],1,Piece,[Piece,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
 poserPion([A,"-",C,D,E,F,G,H,I,J,K,L,M,N,O,P],2,Piece,[A,Piece,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
 poserPion([A,B,"-",D,E,F,G,H,I,J,K,L,M,N,O,P],3,Piece,[A,B,Piece,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.

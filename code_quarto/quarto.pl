@@ -1,4 +1,3 @@
-:-include("predicatsQuarto.pl").
 :-include("fonctionsQuarto.pl").
 :-include("jeuIA.pl").
 :-include("MinMaxQuarto.pl").

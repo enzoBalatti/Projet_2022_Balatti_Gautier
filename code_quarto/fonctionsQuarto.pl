@@ -131,26 +131,6 @@ placeDisponible(Position,[T|Q]):-
 inverser(A,B,B,A).
 
 
-poserPion(["-",B,C,D,E,F,G,H,I,J,K,L,M,N,O,P],1,Piece,[Piece,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,"-",C,D,E,F,G,H,I,J,K,L,M,N,O,P],2,Piece,[A,Piece,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,"-",D,E,F,G,H,I,J,K,L,M,N,O,P],3,Piece,[A,B,Piece,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,"-",E,F,G,H,I,J,K,L,M,N,O,P],4,Piece,[A,B,C,Piece,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,"-",F,G,H,I,J,K,L,M,N,O,P],5,Piece,[A,B,C,D,Piece,F,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,"-",G,H,I,J,K,L,M,N,O,P],6,Piece,[A,B,C,D,E,Piece,G,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,"-",H,I,J,K,L,M,N,O,P],7,Piece,[A,B,C,D,E,F,Piece,H,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,"-",I,J,K,L,M,N,O,P],8,Piece,[A,B,C,D,E,F,G,Piece,I,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,"-",J,K,L,M,N,O,P],9,Piece,[A,B,C,D,E,F,G,H,Piece,J,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,"-",K,L,M,N,O,P],10,Piece,[A,B,C,D,E,F,G,H,I,Piece,K,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,"-",L,M,N,O,P],11,Piece,[A,B,C,D,E,F,G,H,I,J,Piece,L,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,K,"-",M,N,O,P],12,Piece,[A,B,C,D,E,F,G,H,I,J,K,Piece,M,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,K,L,"-",N,O,P],13,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,Piece,N,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,"-",O,P],14,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,Piece,O,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,N,"-",P],15,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,N,Piece,P]):-!.
-poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,"-"],16,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,Piece]):-!.
-poserPion(Grille,_,Piece,NewGrille):-write('Tu ne peux pas le placer ici'),nl,read(N),poserPion(Grille,N,Piece,NewGrille).
-
-
-
 
 
 
