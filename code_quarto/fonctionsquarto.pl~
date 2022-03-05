@@ -101,31 +101,32 @@ placerPion(Numero,Pion,[T|Q],Res,Res1):-
     N1 is Numero-1,
     placerPion(N1,Pion,Q,[T|Res],Res1).
 
-entrerPion(PiecesDisponibles):-
-%on demande a l'utilisateur de choisir un pion
+entrerPion(PiecesDisponibles,Pion,Pion):-
+    piece(Pion),pionDisponible(Pion,PiecesDisponibles),!.
+entrerPion(PiecesDisponibles,_,Retour):-
+    %on demande a l'utilisateur de choisir un pion
     writeln("Quel pion voulez vous placer parmi les suivants? N'oubliez pas de mettre un point a la fin de votre saisie"),      afficherLigne(PiecesDisponibles),writeln(""),
 
     %on récupere ce qu'il a ecrit
-    read(Pion),pionDisponible(Pion,PiecesDisponibles,_).
-
-pionDisponible(Pion,PiecesDisponibles,PionFinal):-piece(Pion),member(Pion,PiecesDisponibles),PionFinal=Pion,!.
-pionDisponible(Pion,PiecesDisponibles,_):-
-    not((piece(Pion),member(Pion,PiecesDisponibles))),
-    writeln("Choisissez un pion parmi ceux disponibles"),writeln(""),
-    entrerPion(PiecesDisponibles).
+    read(Pion),
+    entrerPion(PiecesDisponibles,Pion,Retour).
 
 
-entrerPlace(PlacesOccupees,Position):-
+pionDisponible(Pion,[Pion|_]).
+pionDisponible(Pion,[T|Q]):-Pion\=T,pionDisponible(Pion,Q).
+
+entrerPlace(PlacesOccupees,Position,Position):-
+    number(Position),Position>(-1),Position<16,
+    placeDisponible(Position,PlacesOccupees),!.
+entrerPlace(PlacesOccupees,_,Retour):-
     writeln("A quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),nl,
-    read(Position),placeDisponible(Position,PlacesOccupees,_).
+    read(Position)
+    ,entrerPlace(PlacesOccupees,Position,Retour).
 
-placeDisponible(Position,PlacesOccupees,PositionFinale):-
-    number(Position),not(memberchk(Position,PlacesOccupees)),Position>(-1),Position<16,PositionFinale=Position.
-placeDisponible(Position,PlacesOccupees,_):-
-     not((number(Position),memberchk(Position,PlacesOccupees),verifieMembre(Position))),
-     writeln("veuillez choisir une place parmi celles disponibles"),writeln(""),nl,
-     entrerPlace(PlacesOccupees,_).
+placeDisponible(_,[]).
+placeDisponible(Position,[T|Q]):-
+    Position\=T,placeDisponible(Position,Q).
 
 poserPion(["-",B,C,D,E,F,G,H,I,J,K,L,M,N,O,P],1,Piece,[Piece,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
 poserPion([A,"-",C,D,E,F,G,H,I,J,K,L,M,N,O,P],2,Piece,[A,Piece,C,D,E,F,G,H,I,J,K,L,M,N,O,P]):-!.
@@ -143,11 +144,8 @@ poserPion([A,B,C,D,E,F,G,H,I,J,K,L,"-",N,O,P],13,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,
 poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,"-",O,P],14,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,Piece,O,P]):-!.
 poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,N,"-",P],15,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,N,Piece,P]):-!.
 poserPion([A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,"-"],16,Piece,[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,Piece]):-!.
-poserPion(Grille,_,Piece,NewGrille):-write('Tu ne peux pas le placer ici'),nl,read(N),fonction(Grille,N,Piece,NewGrille).
+poserPion(Grille,_,Piece,NewGrille):-write('Tu ne peux pas le placer ici'),nl,read(N),poserPion(Grille,N,Piece,NewGrille).
 
-lectureModeJeu(1):-true.
-lectureModeJeu(2):-true.
-lectureModeJeu(_):-writeln('Ce mode de jeu n existe pas'),read(N).
 
 
 

@@ -1,6 +1,7 @@
 :-include("predicatsQuarto.pl").
 :-include("fonctionsQuarto.pl").
 :-include("jeuIA.pl").
+:-include("MinMaxQuarto.pl").
 
 
 quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consignes(),
@@ -11,15 +12,14 @@ quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consig
     writeln("Quel mode de jeu que vous voulez faire ?"),nl,
     writeln("entrez 1 pour jouer à 2 sur le même ordinateur"),
     writeln("entrez 2 pour jouer contre une IA non jouant hasardeusement"),
-    read(Mode2Jeu),lectureModeJeu(Mode2Jeu),
+   % read(Mode2Jeu),
 
-    jeu(Plateau,PiecesDisponibles,PlacesOccupees,J1,J2,Mode2Jeu).
+    jeu(Plateau,PiecesDisponibles,PlacesOccupees,J1,J2).
 
 
-inverser(A,B,B,A).
 
-jeu(Plateau,[],_):-not(gagne(Plateau)),writeln("egalite, vous avez placé tous les pions"),etatPlateau(Plateau),!.
-jeu(Plateau,_,_,_,JoueurPassif,Mode2Jeu):-gagne(Plateau),write("Bravo "),write(JoueurPassif),writeln("! Vous avez gagné la partie"),etatPlateau(Plateau),!.
+jeu(Plateau,[],_,_,_):-not(gagne(Plateau)),writeln("egalite, vous avez placé tous les pions"),etatPlateau(Plateau),!.
+jeu(Plateau,_,_,_,JoueurPassif):-gagne(Plateau),write("Bravo "),write(JoueurPassif),writeln("! Vous avez gagné la partie"),etatPlateau(Plateau),!.
 
 jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     %on affiche l'etat du plateau :
@@ -29,21 +29,21 @@ jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     write(JoueurPassif),writeln(" quel pion voulez vous que votre adversaire place parmi les suivants? N'oubliez pas de mettre un point a la fin de votre saisie"),
     afficherLigne(PiecesDisponibles),writeln(""),
     %on récupere ce qu'il a ecrit
-    read(Pion),pionDisponible(Pion,PiecesDisponibles,PionFinal),
+    read(Pion),entrerPion(PiecesDisponibles,Pion,PionFinal),
 
     %le pion doit maintenant etre place
     write(JoueurCourant),writeln(" a quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),
-    %read(Position),placeDisponible(Position,PlacesOccupees,PositionFinale),
+    read(Position),entrerPlace(PlacesOccupees,Position,PositionFinale),
     %number(PositionFinale),
-    read(PositionFinale),
-    poserPion(Plateau,PositionFinale,PionFinal,Res),
 
-    %placerPion(PositionFinale,PionFinal,Plateau,_,Res),
+    placerPion(PositionFinale,PionFinal,Plateau,_,Res),
     retirer(PiecesDisponibles,PionFinal,_,PD1),
     ajouterElem(PositionFinale,PlacesOccupees,PO1),
     inverser(JoueurCourant,JoueurPassif,JC1,JP1),
     jeu(Res,PD1,PO1,JC1,JP1).
+
+
 
 
 
