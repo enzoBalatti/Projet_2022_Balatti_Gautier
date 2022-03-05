@@ -1,3 +1,22 @@
+:-use_module(library(random)).
+
+genereNombreAleatoire(Random):-random_between(1,16,Random).
+
+choixPosition(Position,"ia"):-
+    genereNombreAleatoire(Random),
+    Position=Random,!.
+choixPosition(Position,_):-
+    read(Position).
+choixPion(Pion,"ia"):-
+    genereNombreAleatoire(Random),
+    string_concat("p",Random,X),
+    atom_string(Pion,X).
+choixPion(Pion,_):-
+    read(Pion).
+
+
+
+
 retirer([],_,L,L1):-reverse(L,L1).
 retirer([T|Q],E,L,L1):-T=E,retirer(Q,E,L,L1).
 retirer([T|Q],E,L,L1):-T\==E,retirer(Q,E,[T|L],L1).
@@ -101,34 +120,55 @@ placerPion(Numero,Pion,[T|Q],Res,Res1):-
     N1 is Numero-1,
     placerPion(N1,Pion,Q,[T|Res],Res1).
 
-entrerPion(PiecesDisponibles,Pion,Pion):-
+entrerPion(PiecesDisponibles,Pion,Pion,_):-
     piece(Pion),pionDisponible(Pion,PiecesDisponibles),!.
-entrerPion(PiecesDisponibles,_,Retour):-
+entrerPion(PiecesDisponibles,_,Retour,Joueur):-
     %on demande a l'utilisateur de choisir un pion
     writeln("Quel pion voulez vous placer parmi les suivants? N'oubliez pas de mettre un point a la fin de votre saisie"),      afficherLigne(PiecesDisponibles),writeln(""),
 
     %on récupere ce qu'il a ecrit
-    read(Pion),
-    entrerPion(PiecesDisponibles,Pion,Retour).
+    choixPion(Pion,Joueur),
+    entrerPion(PiecesDisponibles,Pion,Retour,Joueur).
 
 
 pionDisponible(Pion,[Pion|_]).
 pionDisponible(Pion,[T|Q]):-Pion\=T,pionDisponible(Pion,Q).
 
-entrerPlace(PlacesOccupees,Position,Position):-
+entrerPlace(PlacesOccupees,Position,Position,_):-
     number(Position),Position>(-1),Position<16,
     placeDisponible(Position,PlacesOccupees),!.
-entrerPlace(PlacesOccupees,_,Retour):-
+entrerPlace(PlacesOccupees,_,Retour,Joueur):-
     writeln("A quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),nl,
-    read(Position)
-    ,entrerPlace(PlacesOccupees,Position,Retour).
+    choixPosition(Position,Joueur),
+    entrerPlace(PlacesOccupees,Position,Retour,Joueur).
 
 placeDisponible(_,[]).
 placeDisponible(Position,[T|Q]):-
     Position\=T,placeDisponible(Position,Q).
 
 inverser(A,B,B,A).
+
+afficherInfosPions():-
+    writeln("p1 : claire,ronde,pleine,haute"),
+    writeln("p2 : claire,ronde,creuse,haute"),
+    writeln("p3 : claire,ronde,pleine,basse"),
+    writeln("p4 : claire,ronde,creuse,basse"),
+    writeln("p5 : claire,carre,pleine,haute"),
+    writeln("p6 : claire,carre,creuse,haute"),
+    writeln("p7 : claire,carre,pleine,basse"),
+    writeln("p8 : claire,carre,creuse,basse"),
+    writeln("p9 : fonce,ronde,pleine,haute"),
+    writeln("p10 : fonce,ronde,creuse,haute"),
+    writeln("p11 : fonce,ronde,pleine,basse"),
+    writeln("p12 : fonce,ronde,creuse,basse"),
+    writeln("p13 : fonce,carre,pleine,haute"),
+    writeln("p14 : fonce,carre,creuse,haute"),
+    writeln("p15 : fonce,carre,pleine,basse"),
+    writeln("p16 : fonce,carre,creuse,basse").
+
+
+
 
 
 
