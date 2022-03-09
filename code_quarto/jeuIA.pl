@@ -1,26 +1,13 @@
 :-include("fonctionsQuarto.pl").
-:-include("predicatsQuarto").
 
+partieGagne1Coup(_,[],_,_):-false.
 
-soustraireList([],_,ListeRetour,ListeRetour1):-reverse(ListeRetour,ListeRetour1),!.
-soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
-    member(T1,L2),
-    soustraireList(Q1,L2,ListeRetour,ListeRetour1),!.
-soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
-    soustraireList(Q1,L2,[T1|ListeRetour],ListeRetour1),!.
-
-
-partieGagne1Coup(_,[],_):-write(1),!.
-
-partieGagne1Coup(Piece,[T|_],Grille):-
+partieGagne1Coup(Piece,[T|_],Grille,T):-
     placerPion(T,Piece,Grille,_,NewGrille),
-    gagne(NewGrille),write(T),!.
+    gagne(NewGrille),!.
 
-partieGagne1Coup(Piece,[T|Q],Grille):-
-    placerPion(T,Piece,Grille,_,NewGrille),
-    not(gagne(NewGrille)),!,
-    partieGagne1Coup(Piece,Q,Grille),!.
-
+partieGagne1Coup(Piece,[_|Q],Grille,Position):-
+    partieGagne1Coup(Piece,Q,Grille,Position).
 
 
 

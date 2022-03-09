@@ -1,5 +1,4 @@
 :-include("jeuIA.pl").
-%:-include("MinMaxQuarto.pl").
 
 
 quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consignes(),
@@ -32,7 +31,7 @@ jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     write(JoueurCourant),writeln(" a quelle position voulez vous le placer?"),nl,
     write("Voici les places déjà occupees"),
     afficherLigne(PlacesOccupees),nl,nl,
-    choixPosition(Position,JoueurCourant),entrerPlace(PlacesOccupees,Position,PositionFinale,JoueurCourant),
+    choixPosition(Plateau,PionFinal,Position,JoueurCourant),entrerPlace(Plateau,Pion,PlacesOccupees,Position,PositionFinale,JoueurCourant),
     writeln(PositionFinale),
 
     placerPion(PositionFinale,PionFinal,Plateau,_,Res),

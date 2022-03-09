@@ -1,15 +1,17 @@
-<<<<<<< HEAD
-retirer([],_,L,L1):-reverse(L,L1).%permet de retirer un element d'une liste
-=======
 :-use_module(library(random)).
+:-include("MinMaxQuarto.pl").
+
 
 genereNombreAleatoire(Random):-random_between(1,16,Random).
 
-choixPosition(Position,"ia"):-
+choixPosition(_,_,Position,"ia"):-
     genereNombreAleatoire(Random),
     Position=Random,!.
-choixPosition(Position,_):-
+choixPosition(Plateau,Pion,Position,"ia2"):-
+    choisirMeilleurePosition(Plateau,Pion,Position),!.
+choixPosition(_,_,Position,_):-
     read(Position).
+
 choixPion(Pion,"ia"):-
     genereNombreAleatoire(Random),
     string_concat("p",Random,X),
@@ -20,8 +22,8 @@ choixPion(Pion,_):-
 
 
 
-retirer([],_,L,L1):-reverse(L,L1).
->>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
+retirer([],_,L,L1):-reverse(L,L1).%permet de retirer un element d'une liste
+
 retirer([T|Q],E,L,L1):-T=E,retirer(Q,E,L,L1).
 retirer([T|Q],E,L,L1):-T\==E,retirer(Q,E,[T|L],L1).
 
@@ -120,11 +122,7 @@ placerPion(Numero,Pion,[T|Q],Res,Res1):-%on parcours le palteau jusqu'a la posit
     N1 is Numero-1,
     placerPion(N1,Pion,Q,[T|Res],Res1).
 
-<<<<<<< HEAD
-entrerPion(PiecesDisponibles,Pion,Pion):-%on vereifie que le pion ente par l'utilisateur est valide, on lui demande d'en entrer un autre tant qu'il n'en entre pas un valide
-=======
-entrerPion(PiecesDisponibles,Pion,Pion,_):-
->>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
+entrerPion(PiecesDisponibles,Pion,Pion,_):-%on verifie que le pion ente par l'utilisateur est valide, on lui demande d'en entrer un autre tant qu'il n'en entre pas un valide
     piece(Pion),pionDisponible(Pion,PiecesDisponibles),!.
 entrerPion(PiecesDisponibles,_,Retour,Joueur):-
     %on demande a l'utilisateur de choisir un pion
@@ -138,14 +136,14 @@ entrerPion(PiecesDisponibles,_,Retour,Joueur):-
 pionDisponible(Pion,[Pion|_]).
 pionDisponible(Pion,[T|Q]):-Pion\=T,pionDisponible(Pion,Q).
 
-entrerPlace(PlacesOccupees,Position,Position,_):-
+entrerPlace(_,_,PlacesOccupees,Position,Position,_):-%on verifie que la position entree par l'utilisateur est valide, on lui demande d'en entrer une autre tant qu'il n'en entre pas une valide
     number(Position),Position>(-1),Position<16,
     placeDisponible(Position,PlacesOccupees),!.
-entrerPlace(PlacesOccupees,_,Retour,Joueur):-
+entrerPlace(Plateau,Pion,PlacesOccupees,_,Retour,Joueur):-
     writeln("A quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),nl,
-    choixPosition(Position,Joueur),
-    entrerPlace(PlacesOccupees,Position,Retour,Joueur).
+    choixPosition(Plateau,Pion,Position,Joueur),
+    entrerPlace(Plateau,Pion,PlacesOccupees,Position,Retour,Joueur).
 
 placeDisponible(_,[]).
 placeDisponible(Position,[T|Q]):-
@@ -153,7 +151,6 @@ placeDisponible(Position,[T|Q]):-
 
 inverser(A,B,B,A).%inverse deux elements.
 
-<<<<<<< HEAD
 
 
 soustraireList([],_,ListeRetour,ListeRetour1):-reverse(ListeRetour,ListeRetour1),!.%les elements de la premiere liste presents egalement dans la deuxieme sont retires de la premiere.
@@ -163,8 +160,6 @@ soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
 soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
     soustraireList(Q1,L2,[T1|ListeRetour],ListeRetour1),!.
 
-
-=======
 afficherInfosPions():-
     writeln("p1 : claire,ronde,pleine,haute"),
     writeln("p2 : claire,ronde,creuse,haute"),
@@ -182,7 +177,6 @@ afficherInfosPions():-
     writeln("p14 : fonce,carre,creuse,haute"),
     writeln("p15 : fonce,carre,pleine,basse"),
     writeln("p16 : fonce,carre,creuse,basse").
->>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
 
 
 
