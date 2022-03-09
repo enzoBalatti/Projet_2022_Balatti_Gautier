@@ -1,4 +1,27 @@
+<<<<<<< HEAD
 retirer([],_,L,L1):-reverse(L,L1).%permet de retirer un element d'une liste
+=======
+:-use_module(library(random)).
+
+genereNombreAleatoire(Random):-random_between(1,16,Random).
+
+choixPosition(Position,"ia"):-
+    genereNombreAleatoire(Random),
+    Position=Random,!.
+choixPosition(Position,_):-
+    read(Position).
+choixPion(Pion,"ia"):-
+    genereNombreAleatoire(Random),
+    string_concat("p",Random,X),
+    atom_string(Pion,X).
+choixPion(Pion,_):-
+    read(Pion).
+
+
+
+
+retirer([],_,L,L1):-reverse(L,L1).
+>>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
 retirer([T|Q],E,L,L1):-T=E,retirer(Q,E,L,L1).
 retirer([T|Q],E,L,L1):-T\==E,retirer(Q,E,[T|L],L1).
 
@@ -23,17 +46,13 @@ extraitDiagInv(Grille,A,B,C,D):-
     nth0(12,Grille,D).
 
 
-ligne(A,_,_,_):-
-    A="-",
+ligne("-",_,_,_):-
     !,false.
-ligne(_,A,_,_):-
-    A="-",
+ligne(_,"-",_,_):-
     !,false.
-ligne(_,_,A,_):-
-    A="-",
+ligne(_,_,"-",_):-
     !,false.
-ligne(_,_,_,A):-
-    A="-",
+ligne(_,_,_,"-"):-
     !,false.
 
 
@@ -101,29 +120,37 @@ placerPion(Numero,Pion,[T|Q],Res,Res1):-%on parcours le palteau jusqu'a la posit
     N1 is Numero-1,
     placerPion(N1,Pion,Q,[T|Res],Res1).
 
+<<<<<<< HEAD
 entrerPion(PiecesDisponibles,Pion,Pion):-%on verifie que le pion ente par l'utilisateur est valide, on lui demande d'en entrer un autre tant qu'il n'en entre pas un valide
+=======
+entrerPion(PiecesDisponibles,Pion,Pion,_):-
+>>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
     piece(Pion),pionDisponible(Pion,PiecesDisponibles),!.
-entrerPion(PiecesDisponibles,_,Retour):-
+entrerPion(PiecesDisponibles,_,Retour,Joueur):-
     %on demande a l'utilisateur de choisir un pion
     writeln("Quel pion voulez vous placer parmi les suivants? N'oubliez pas de mettre un point a la fin de votre saisie"),      afficherLigne(PiecesDisponibles),writeln(""),
 
     %on récupere ce qu'il a ecrit
-    read(Pion),
-    entrerPion(PiecesDisponibles,Pion,Retour).
+    choixPion(Pion,Joueur),
+    entrerPion(PiecesDisponibles,Pion,Retour,Joueur).
 
 
 pionDisponible(Pion,[Pion|_]).
 pionDisponible(Pion,[T|Q]):-Pion\=T,pionDisponible(Pion,Q).
 
+<<<<<<< HEAD
 entrerPlace(PlacesOccupees,Position,Position):-%on verifie que la position entree par l'utilisateur est valide, on lui demande d'en entrer une autre tant qu'il n'en entre pas une valide
 
+=======
+entrerPlace(PlacesOccupees,Position,Position,_):-
+>>>>>>> 0f89bf5bb024f5857a02e4e5d81492099d5a63ff
     number(Position),Position>(-1),Position<16,
     placeDisponible(Position,PlacesOccupees),!.
-entrerPlace(PlacesOccupees,_,Retour):-
+entrerPlace(PlacesOccupees,_,Retour,Joueur):-
     writeln("A quelle position voulez vous le placer?"),
     afficherLigne(PlacesOccupees),writeln(""),nl,
-    read(Position)
-    ,entrerPlace(PlacesOccupees,Position,Retour).
+    choixPosition(Position,Joueur),
+    entrerPlace(PlacesOccupees,Position,Retour,Joueur).
 
 placeDisponible(_,[]).
 placeDisponible(Position,[T|Q]):-
@@ -140,7 +167,23 @@ soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
 soustraireList([T1|Q1],L2,ListeRetour,ListeRetour1):-
     soustraireList(Q1,L2,[T1|ListeRetour],ListeRetour1),!.
 
-
+afficherInfosPions():-
+    writeln("p1 : claire,ronde,pleine,haute"),
+    writeln("p2 : claire,ronde,creuse,haute"),
+    writeln("p3 : claire,ronde,pleine,basse"),
+    writeln("p4 : claire,ronde,creuse,basse"),
+    writeln("p5 : claire,carre,pleine,haute"),
+    writeln("p6 : claire,carre,creuse,haute"),
+    writeln("p7 : claire,carre,pleine,basse"),
+    writeln("p8 : claire,carre,creuse,basse"),
+    writeln("p9 : fonce,ronde,pleine,haute"),
+    writeln("p10 : fonce,ronde,creuse,haute"),
+    writeln("p11 : fonce,ronde,pleine,basse"),
+    writeln("p12 : fonce,ronde,creuse,basse"),
+    writeln("p13 : fonce,carre,pleine,haute"),
+    writeln("p14 : fonce,carre,creuse,haute"),
+    writeln("p15 : fonce,carre,pleine,basse"),
+    writeln("p16 : fonce,carre,creuse,basse").
 
 
 
