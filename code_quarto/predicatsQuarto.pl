@@ -89,7 +89,9 @@ fonce(p14).
 fonce(p15).
 fonce(p16).
 
-consignes():-writeln("ici s'afficheront les consignes").
+consignes():-writeln("Bonjour, vous vous apprétez a jouer une partie de quarto, vous pouvez jouer a deux ou affronter l'IA. Pour affronter l'IA, entrez ia lorsque vous devrez entrer le nom d'un joueur."),nl,
+    writeln("Les regles du jeu sont les suivantes: vous avez face a vous un plateau de 16 cases, comprenant 4 lignes et 4 colonnes. Dans ce jeu de reflexion, les seize pieces du jeu, toutes differentes, possedent chacune 4 proprietes distinctes : haute ou basse, ronde ou carrée, claire ou foncée, pleine ou creuse. Chacun à son tour choisit et donne une pièce à l'adversaire, qui doit la jouer sur une case libre. Le gagnant est celui qui, avec une pièce reçue, crée un alignement de 4 pièces ayant au moins un caractère commun.
+     Le premier joueur a entrer son nom sera le premier a placer une piece").
 
 initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees):-
     Plateau=["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"],

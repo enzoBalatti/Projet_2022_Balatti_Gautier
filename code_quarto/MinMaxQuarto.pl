@@ -5,6 +5,7 @@ max_liste([X],X) :- !.%renvoie l'element maximal d'une liste
 max_liste([X|Xs], M):- max_liste(Xs, M), M >= X,!.
 max_liste([X|Xs], X):- max_liste(Xs, M), X >  M,!.
 
+indexOf(L,E,-1):-not(memberchk(E,L)),!.
 indexOf([Element|_], Element, 0):-!.%renvoie l'index d'un element d'une liste
 indexOf([_|Q], Element, Index):-
   indexOf(Q, Element, Index1),

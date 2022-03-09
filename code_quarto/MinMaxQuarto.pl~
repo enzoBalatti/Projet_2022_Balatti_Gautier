@@ -1,11 +1,12 @@
 :-include("predicatsquarto.pl").
 :-use_module(library(random)).
 
-max_liste([X],X) :- !.
+max_liste([X],X) :- !.%renvoie l'element maximal d'une liste
 max_liste([X|Xs], M):- max_liste(Xs, M), M >= X,!.
 max_liste([X|Xs], X):- max_liste(Xs, M), X >  M,!.
 
-indexOf([Element|_], Element, 0):-!.
+indexOf([],_,-1).
+indexOf([Element|_], Element, 0):-!.%renvoie l'index d'un element d'une liste
 indexOf([_|Q], Element, Index):-
   indexOf(Q, Element, Index1),
   !,
@@ -43,14 +44,13 @@ connexion(Pion,Plateau,[T|Q],Elements,ValeurRetour):-
   connexion(Pion,Plateau,Q,Elements,ValeurRetour1),ValeurRetour is ValeurRetour1+N,!.
 
 
-listeElements([claire,fonce,ronde,carre,haute,basse,creuse,pleine]).
+listeElements([claire,fonce,ronde,carre,haute,basse,creuse,pleine]).%definition des proprietes des pieces
+
 nbElementsCommuns(_,_,[],0).%calcule le nombre d'elements communs entre 2 pions
 nbElementsCommuns(Pion1,Pion2,[T|Q],N):-L=[Pion1,Pion2],maplist(T,L),nbElementsCommuns(Pion1,Pion2,Q,N1),N is 1+N1,!.
 nbElementsCommuns(Pion1,Pion2,[_|Q],N):-nbElementsCommuns(Pion1,Pion2,Q,N),!.
 
-scoreCase(_,[],_).
-scoreCase(Case,[T|Q],Score).
-
+%renvoie la liste des cases adjacentes a la case passee en parametre
 casesAdjacentes(0,CasesAdjacentes):-CasesAdjacentes=[0,4,5].
 casesAdjacentes(1,CasesAdjacentes):-CasesAdjacentes=[0,2,5].
 casesAdjacentes(2,CasesAdjacentes):-CasesAdjacentes=[1,6,3].
@@ -67,34 +67,5 @@ casesAdjacentes(12,CasesAdjacentes):-CasesAdjacentes=[8,9,13].
 casesAdjacentes(13,CasesAdjacentes):-CasesAdjacentes=[9,12,14].
 casesAdjacentes(14,CasesAdjacentes):-CasesAdjacentes=[13,10,15].
 casesAdjacentes(15,CasesAdjacentes):-CasesAdjacentes=[14,10,11].
-
-
-
-
-trouverLigne(N,1):-number(N),N>0,N<5,!.
-trouverLigne(N,2):-number(N),N>4,N<9,!.
-trouverLigne(N,3):-number(N),N>8,N<13,!.
-trouverLigne(N,4):-number(N),N>12,N<17,!.
-
-
-
-trouverColonne(N,1):-number(N),(N=:=1;N=:=5;N=:=9;N=:=13),!.
-trouverColonne(N,1):-number(N),(N=:=2;N=:=6;N=:=10;N=:=14),!.
-trouverColonne(N,1):-number(N),(N=:=3;N=:=7;N=:=11;N=:=15),!.
-trouverColonne(N,1):-number(N),(N=:=4;N=:=8;N=:=12;N=:=16),!.
-
-
-
-trouverDiago(N):-number(N),(N=:=1;N=:=6;N=:=11;N=:=16).
-trouverDiagoInv(N):-number(N),(N=:=13;N=:=10;N=:=7;N=:=4).
-
-
-
-
-
-evaluerLigne(). %permet d'évaluer si tout les pions d'une ligne ont des proprietes communes et si oui lesquelles.
-
-evaluerColonne().
-evaluerDiagos().
 
 
