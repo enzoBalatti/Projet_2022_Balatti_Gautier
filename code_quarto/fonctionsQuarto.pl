@@ -42,17 +42,13 @@ extraitDiagInv(Grille,A,B,C,D):-
     nth0(12,Grille,D).
 
 
-ligne(A,_,_,_):-
-    A="-",
+ligne("-",_,_,_):-
     !,false.
-ligne(_,A,_,_):-
-    A="-",
+ligne(_,"-",_,_):-
     !,false.
-ligne(_,_,A,_):-
-    A="-",
+ligne(_,_,"-",_):-
     !,false.
-ligne(_,_,_,A):-
-    A="-",
+ligne(_,_,_,"-"):-
     !,false.
 
 
@@ -166,11 +162,6 @@ afficherInfosPions():-
     writeln("p14 : fonce,carre,creuse,haute"),
     writeln("p15 : fonce,carre,pleine,basse"),
     writeln("p16 : fonce,carre,creuse,basse").
-
-
-
-
-
 
 
 

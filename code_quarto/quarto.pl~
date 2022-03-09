@@ -1,6 +1,6 @@
-:-include("fonctionsQuarto.pl").
-%:-include("jeuIA.pl").
-:-include("MinMaxQuarto.pl").
+:-include("jeuIA.pl").
+%:-include("MinMaxQuarto.pl").
+:-include("predicatsQuarto").
 
 
 quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consignes(),
@@ -27,7 +27,7 @@ jeu(Plateau,PiecesDisponibles,PlacesOccupees,JoueurCourant,JoueurPassif):-
     write("Voici toutes les pièces disponibles "),afficherLigne(PiecesDisponibles),nl,nl,
     %on récupere ce qu'il a ecrit
     choixPion(Pion,JoueurPassif),entrerPion(PiecesDisponibles,Pion,PionFinal,JoueurPassif),
-    write(JoueurPassif),write("a choisi la pièce suivante : "),writeln(PionFinal),nl,
+    write(JoueurPassif),write(" a choisi la pièce suivante : "),writeln(PionFinal),nl,
 
     %le pion doit maintenant etre place
     write(JoueurCourant),writeln(" a quelle position voulez vous le placer?"),nl,

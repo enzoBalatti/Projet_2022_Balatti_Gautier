@@ -1,6 +1,5 @@
-:-include("fonctionsQuarto.pl").
-%:-include("jeuIA.pl").
-:-include("MinMaxQuarto.pl").
+:-include("jeuIA.pl").
+%:-include("MinMaxQuarto.pl").
 
 
 quarto():-initialisationPlateau(Plateau,PiecesDisponibles,PlacesOccupees),consignes(),
